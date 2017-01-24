@@ -9,6 +9,12 @@ import javax.inject.Inject;
 import org.eclipse.draw2d.LightweightSystem;
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.nebula.visualization.xygraph.dataprovider.CircularBufferDataProvider;
 import org.eclipse.nebula.visualization.xygraph.dataprovider.IDataProvider;
 import org.eclipse.nebula.visualization.xygraph.dataprovider.ISample;
@@ -23,7 +29,9 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
 import com.opencsv.CSVWriter;
@@ -42,13 +50,46 @@ public class AbsorbanceChart {
 	private Shell activeShell;
 
 	public AbsorbanceChart() {
-		String portName = Serial.list()[0];
-		serialPort = new Serial(portName, 57600);
 	}
 
 	@PostConstruct
 	public void createComposite(Composite parent) {
-		parent.setLayout(new GridLayout(2, false));
+		parent.setLayout(new GridLayout(4, false));
+
+		new Label(parent, SWT.NONE).setText("Port");
+
+		ComboViewer ports = new ComboViewer(parent);
+		ports.setContentProvider(ArrayContentProvider.getInstance());
+		String[] serialPorts = Serial.list();
+		ports.setInput(serialPorts);
+
+		if (serialPorts.length > 0) {
+
+			String portName = serialPorts[0];
+			serialPort = new Serial(portName, 57600);
+			ports.setSelection(new StructuredSelection(portName));
+		}
+		ports.addSelectionChangedListener(new ISelectionChangedListener() {
+
+			@Override
+			public void selectionChanged(SelectionChangedEvent event) {
+				StructuredSelection selection = (StructuredSelection) event.getSelection();
+				if (selection.getFirstElement() != null) {
+					// clean if already have a selected one
+					if (serialPort != null)
+						serialPort.dispose();
+
+					if (trace != null) {
+						xyGraph.removeTrace(trace);
+					}
+
+					String portName = (String) selection.getFirstElement();
+					serialPort = new Serial(portName, 57600);
+					ports.setSelection(new StructuredSelection(portName));
+				}
+
+			}
+		});
 
 		Button getDataBtn = new Button(parent, SWT.PUSH);
 		getDataBtn.setText("Get Data");
@@ -69,7 +110,7 @@ public class AbsorbanceChart {
 		btnExportCsv.setText("Export CSV");
 		Canvas canvas = new Canvas(parent, SWT.NONE);
 		GridData gd_canvas = new GridData(SWT.FILL, SWT.FILL, true, true);
-		gd_canvas.horizontalSpan = 2;
+		gd_canvas.horizontalSpan = 4;
 		canvas.setLayoutData(gd_canvas);
 		final LightweightSystem lws = new LightweightSystem(canvas);
 
@@ -125,6 +166,11 @@ public class AbsorbanceChart {
 			xyGraph.removeTrace(trace);
 		}
 
+		if (serialPort == null) {
+			MessageDialog.openError(Display.getCurrent().getActiveShell(), "Error", "Please select a valid Port.");
+			return;
+		}
+
 		serialPort.clear(); // Clear any pending serial data
 
 		serialPort.write("50"); // Write out integration time
@@ -156,8 +202,11 @@ public class AbsorbanceChart {
 
 		String inStr1 = "0"; // Holds the serial input string
 
-		while (serialPort.available() < 0) // Wait until there is something in
-											// buffer
+		while (serialPort != null && serialPort.available() < 0) // Wait until
+																	// there is
+																	// something
+																	// in
+		// buffer
 		{
 			try {
 				Thread.sleep(100);
@@ -168,7 +217,8 @@ public class AbsorbanceChart {
 		}
 
 		do {
-			inStr1 = serialPort.readStringUntil(CARRIAGE_RETURN_CODE);
+			if (serialPort != null)
+				inStr1 = serialPort.readStringUntil(CARRIAGE_RETURN_CODE);
 		} while (inStr1 == null);
 
 		return (Integer.parseInt(inStr1.trim()));
@@ -181,6 +231,7 @@ public class AbsorbanceChart {
 
 	@PreDestroy
 	public void dispose() {
-		serialPort.dispose();
+		if (serialPort != null)
+			serialPort.dispose();
 	}
 }
