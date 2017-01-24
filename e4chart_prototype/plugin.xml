@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+
+   <extension
+         id="product"
+         point="org.eclipse.core.runtime.products">
+      <product
+            name="E4 Chart Prototype"
+            application="org.eclipse.e4.ui.workbench.swt.E4Application">
+         <property
+               name="applicationCSS"
+               value="platform:/plugin/e4chart_prototype/css/default.css">
+         </property>
+         <property
+               name="appName"
+               value="E4 Chart Prototype">
+         </property>
+      </product>
+   </extension>
+
+</plugin>
