@@ -1,0 +1,23 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ChemAnalysis Workbench
+Bundle-SymbolicName: test.rcp; singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: test.rcp.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.ui.views,
+ org.eclipse.ui.navigator,
+ org.eclipse.ui.navigator.resources,
+ org.eclipse.ui.ide,
+ org.eclipse.nebula.visualization.xygraph,
+ org.eclipse.draw2d;bundle-version="3.10.1",
+ org.eclipse.e4.ui.di,
+ org.eclipse.e4.core.di.annotations,
+ org.eclipse.e4.ui.workbench,
+ org.eclipse.core.resources
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ClassPath: .,
+ libs/jssc.jar,
+ libs/opencsv-3.7.jar
