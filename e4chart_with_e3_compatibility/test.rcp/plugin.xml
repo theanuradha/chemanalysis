@@ -25,6 +25,16 @@
     <property name="appName" value="E4 Chart Prototype"> </property>
     <property name="applicationXMI" value="test.rcp/Application.e4xmi"> </property>
   </product>
+</extension>
+<extension
+      point="org.eclipse.ui.editors">
+   <editor
+         class="prototype.editor.DumyCSVOpenEditor"
+         default="true"
+         filenames="*.csv"
+         id="test.rcp.editor.csv"
+         name="CSV Chart">
+   </editor>
 </extension>   
 
 </plugin>

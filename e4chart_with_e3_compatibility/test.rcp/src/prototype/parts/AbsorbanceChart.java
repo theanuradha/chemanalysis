@@ -163,6 +163,23 @@ public class AbsorbanceChart {
 		}
 	}
 
+	public void loadFromCSV(double[] x, double[] y) {
+		if (trace != null) {
+			xyGraph.removeTrace(trace);
+		}
+
+		CircularBufferDataProvider traceDataProvider = new CircularBufferDataProvider(false);
+		traceDataProvider.setBufferSize(3700);
+		traceDataProvider.setCurrentXDataArray(x);
+		traceDataProvider.setCurrentYDataArray(y);
+
+		trace = new Trace("Absorbance", xyGraph.primaryXAxis, xyGraph.primaryYAxis, traceDataProvider);
+
+		// add the trace to xyGraph
+		xyGraph.addTrace(trace);
+		xyGraph.performAutoScale();
+	}
+
 	protected void handleGetData() {
 
 		if (trace != null) {

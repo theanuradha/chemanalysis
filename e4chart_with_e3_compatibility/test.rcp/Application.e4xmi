@@ -13,12 +13,6 @@
           </children>
           <children xsi:type="basic:PartSashContainer" xmi:id="_bTQ1YNS2EeGBn6dQ9VPexA" elementId="" containerData="10000">
             <children xsi:type="advanced:Placeholder" xmi:id="_hP-EYNS2EeGBn6dQ9VPexA" elementId="org.eclipse.ui.editorss" ref="_L2hs4OLwEea1y-MeW1Pywg"/>
-            <children xsi:type="basic:PartStack" xmi:id="_qAHrYNS2EeGBn6dQ9VPexA" elementId="org.eclipse.ui.views.PropertySheetMStack" visible="false" containerData="3400" selectedElement="_soNH8NS2EeGBn6dQ9VPexA">
-              <tags>newtablook</tags>
-              <tags>org.eclipse.e4.secondaryDataStack</tags>
-              <children xsi:type="advanced:Placeholder" xmi:id="_soNH8NS2EeGBn6dQ9VPexA" elementId="org.eclipse.ui.views.PropertySheet" visible="false" ref="_WqRGcNS1EeGBn6dQ9VPexA"/>
-              <children xsi:type="advanced:Placeholder" xmi:id="_1vvxEJtyEeS-YKJKuBxeuQ" elementId="org.eclipse.ui.console.ConsoleView" visible="false" ref="_OtLfAJtzEeS-YKJKuBxeuQ"/>
-            </children>
           </children>
         </children>
       </children>
@@ -38,15 +32,6 @@
         <tags>EditorStack</tags>
       </children>
     </sharedElements>
-    <sharedElements xsi:type="basic:Part" xmi:id="_WqRGcNS1EeGBn6dQ9VPexA" elementId="org.eclipse.ui.views.PropertySheet" visible="false" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Properties" iconURI="platform:/plugin/org.eclipse.ui.views//icons/full/eview16/prop_ps.gif" closeable="true">
-      <tags>View</tags>
-      <tags>categoryTag:General</tags>
-      <menus xmi:id="_HngXENSjEeGwXp2p959l3w" elementId="org.eclipse.ui.views.PropertySheet">
-        <tags>ViewMenu</tags>
-        <tags>menuContribution:menu</tags>
-      </menus>
-      <toolbar xmi:id="_Hng-INSjEeGwXp2p959l3w" elementId="org.eclipse.ui.views.PropertySheet"/>
-    </sharedElements>
     <sharedElements xsi:type="basic:Part" xmi:id="_sS7Q8NS1EeGBn6dQ9VPexA" elementId="org.eclipse.ui.navigator.ProjectExplorer" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Project Explorer" iconURI="platform:/plugin/org.eclipse.ui.navigator.resources//icons/full/eview16/resource_persp.gif">
       <tags>View</tags>
       <tags>categoryTag:General</tags>
@@ -60,7 +45,6 @@
       </menus>
       <toolbar xmi:id="_4UXAUdSmEeG-a6zBTyJ-wg" elementId="org.eclipse.ui.navigator.ProjectExplorer"/>
     </sharedElements>
-    <sharedElements xsi:type="basic:Part" xmi:id="_OtLfAJtzEeS-YKJKuBxeuQ" elementId="org.eclipse.ui.console.ConsoleView" visible="false" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView" label="Console"/>
     <sharedElements xsi:type="basic:Part" xmi:id="_L2hs4OLwEea1y-MeW1Pywg" elementId="test.rcp.part.chart" contributionURI="bundleclass://test.rcp/prototype.parts.AbsorbanceChart" label="Chart"/>
     <trimBars xmi:id="_VOV6ANTAEeGTY-uOtVc6Mg" elementId="org.eclipse.ui.main.toolbar"/>
     <trimBars xmi:id="_VP1HwNTAEeGTY-uOtVc6Mg" elementId="org.eclipse.ui.trim.status" side="Bottom">
