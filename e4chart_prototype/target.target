@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde version="3.8"?><target name="Running Platform" sequenceNumber="6">
+<locations>
+<location path="${eclipse_home}" type="Profile"/>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.nebula.visualization.feature.feature.group" version="1.0.0.201605312033"/>
+<repository location="http://download.eclipse.org/nebula/releases/1.0.0"/>
+</location>
+</locations>
+<environment>
+<os>macosx</os>
+<ws>cocoa</ws>
+<arch>x86_64</arch>
+<nl>en_US</nl>
+</environment>
+<launcherArgs>
+<vmArgs>-Dosgi.requiredJavaVersion=1.7 -XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts -XX:MaxPermSize=256m -Xms256m -Xmx1024m -Xdock:icon=../Resources/Eclipse.icns -XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgs>
+</launcherArgs>
+</target>

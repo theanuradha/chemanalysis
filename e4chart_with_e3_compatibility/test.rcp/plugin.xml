@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         id="application"
+         point="org.eclipse.core.runtime.applications">
+      <application>
+         <run
+               class="test.rcp.Application">
+         </run>
+      </application>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            name="ChemAnalysis Workbench"
+            class="test.rcp.Perspective"
+            id="test.rcp.perspective">
+      </perspective>
+   </extension>
+   
+<extension id="product_test" point="org.eclipse.core.runtime.products">
+  <product application="test.rcp.application" name="E4 Chart Prototype">
+    <property name="appName" value="E4 Chart Prototype"> </property>
+    <property name="applicationXMI" value="test.rcp/Application.e4xmi"> </property>
+  </product>
+</extension>
+<extension
+      point="org.eclipse.ui.editors">
+   <editor
+         class="prototype.editor.DumyCSVOpenEditor"
+         default="true"
+         filenames="*.csv"
+         id="test.rcp.editor.csv"
+         name="CSV Chart">
+   </editor>
+</extension>   
+
+</plugin>

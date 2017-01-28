@@ -1,7 +1,6 @@
 package prototype.serial;
 
 
-import java.util.Collections;
 import java.util.Map;
 
 import jssc.SerialPort;
@@ -232,7 +231,7 @@ public class Serial implements SerialPortEventListener {
   public static String[] list() {
     // returns list sorted alphabetically, thus cu.* comes before tty.*
     // this was different with RXTX
-		try {
+	  try {
 			String[] portNames = SerialPortList.getPortNames();
 			return portNames;
 		} catch (UnsatisfiedLinkError error) {

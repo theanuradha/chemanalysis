@@ -58,16 +58,19 @@ public class AbsorbanceChart {
 
 		new Label(parent, SWT.NONE).setText("Port");
 
-		ComboViewer ports = new ComboViewer(parent);
+		final ComboViewer ports = new ComboViewer(parent);
 		ports.setContentProvider(ArrayContentProvider.getInstance());
 		String[] serialPorts = Serial.list();
 		ports.setInput(serialPorts);
 
 		if (serialPorts.length > 0) {
-
-			String portName = serialPorts[0];
-			serialPort = new Serial(portName, 57600);
-			ports.setSelection(new StructuredSelection(portName));
+			try {
+				String portName = serialPorts[0];
+				serialPort = new Serial(portName, 57600);
+				ports.setSelection(new StructuredSelection(portName));
+			} catch (Throwable e) {
+				e.printStackTrace();
+			}
 		}
 		ports.addSelectionChangedListener(new ISelectionChangedListener() {
 
@@ -158,6 +161,23 @@ public class AbsorbanceChart {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public void loadFromCSV(double[] x, double[] y) {
+		if (trace != null) {
+			xyGraph.removeTrace(trace);
+		}
+
+		CircularBufferDataProvider traceDataProvider = new CircularBufferDataProvider(false);
+		traceDataProvider.setBufferSize(3700);
+		traceDataProvider.setCurrentXDataArray(x);
+		traceDataProvider.setCurrentYDataArray(y);
+
+		trace = new Trace("Absorbance", xyGraph.primaryXAxis, xyGraph.primaryYAxis, traceDataProvider);
+
+		// add the trace to xyGraph
+		xyGraph.addTrace(trace);
+		xyGraph.performAutoScale();
 	}
 
 	protected void handleGetData() {
