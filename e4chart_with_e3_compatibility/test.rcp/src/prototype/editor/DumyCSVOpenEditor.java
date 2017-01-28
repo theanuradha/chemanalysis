@@ -3,6 +3,7 @@ package prototype.editor;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
@@ -17,7 +18,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IFileEditorInput;
-import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.EditorPart;
@@ -53,7 +53,9 @@ public class DumyCSVOpenEditor extends EditorPart {
 		setSite(site);
 		setInput(input);
 		
-		EPartService partService = (EPartService)PlatformUI.getWorkbench().getActiveWorkbenchWindow().getService(EPartService.class);
+		final EPartService partService = (EPartService)PlatformUI.getWorkbench().getActiveWorkbenchWindow().getService(EPartService.class);
+		final MPart findPart = partService.findPart("org.eclipse.e4.ui.compatibility.editor");
+		findPart.setVisible(false);
 
 		if (input instanceof FileEditorInput) {
 			IFileEditorInput fileEditorInput = (IFileEditorInput) input;
@@ -117,13 +119,10 @@ public class DumyCSVOpenEditor extends EditorPart {
 
 		Display.getCurrent().asyncExec(new Runnable() {
 			public void run() {
-				try{
-					site.getPage().closeEditor(DumyCSVOpenEditor.this, false);
-				}
-				catch(IllegalArgumentException e)
-				{
-					//ignore due to workaround
-				}
+					
+					findPart.setVisible(false);
+					partService.hidePart(findPart, true);
+				
 			}
 		});
 	}
