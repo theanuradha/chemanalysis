@@ -53,6 +53,7 @@ public class DumyCSVOpenEditor extends EditorPart {
 		setSite(site);
 		setInput(input);
 		
+	
 		final EPartService partService = (EPartService)PlatformUI.getWorkbench().getActiveWorkbenchWindow().getService(EPartService.class);
 		final MPart findPart = partService.findPart("org.eclipse.e4.ui.compatibility.editor");
 		findPart.setVisible(false);
@@ -97,7 +98,7 @@ public class DumyCSVOpenEditor extends EditorPart {
 				if(mPart !=null)
 				{
 					AbsorbanceChart object = (AbsorbanceChart) mPart.getObject();
-					object.loadFromCSV(x,y);
+					object.loadFromCSV(file.getName(),x,y);
 				}
 
 			} catch (CoreException e) {

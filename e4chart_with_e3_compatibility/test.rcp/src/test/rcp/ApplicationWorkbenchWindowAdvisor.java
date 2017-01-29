@@ -12,9 +12,9 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
         super(configurer);
     }
 
-    public ActionBarAdvisor createActionBarAdvisor(IActionBarConfigurer configurer) {
-        return new ApplicationActionBarAdvisor(configurer);
-    }
+//    public ActionBarAdvisor createActionBarAdvisor(IActionBarConfigurer configurer) {
+//        return new ApplicationActionBarAdvisor(configurer);
+//    }
     
     public void preWindowOpen() {
         IWorkbenchWindowConfigurer configurer = getWindowConfigurer();
