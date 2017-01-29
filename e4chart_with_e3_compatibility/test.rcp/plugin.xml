@@ -11,14 +11,6 @@
          </run>
       </application>
    </extension>
-   <extension
-         point="org.eclipse.ui.perspectives">
-      <perspective
-            name="ChemAnalysis Workbench"
-            class="test.rcp.Perspective"
-            id="test.rcp.perspective">
-      </perspective>
-   </extension>
    
 <extension id="product_test" point="org.eclipse.core.runtime.products">
   <product application="test.rcp.application" name="E4 Chart Prototype">
@@ -35,6 +27,10 @@
          id="test.rcp.editor.csv"
          name="CSV Chart">
    </editor>
+</extension>
+<extension
+      id="id2"
+      point="org.eclipse.e4.workbench.model">
 </extension>   
 
 </plugin>

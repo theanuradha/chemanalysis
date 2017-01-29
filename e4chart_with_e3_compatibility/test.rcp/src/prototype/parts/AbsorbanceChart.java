@@ -12,7 +12,6 @@ import javax.inject.Inject;
 import org.eclipse.draw2d.LightweightSystem;
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.model.application.MApplication;
-import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspectiveStack;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
@@ -136,28 +135,7 @@ public class AbsorbanceChart {
 		MPerspectiveStack perspectiveStack = (MPerspectiveStack) modelService.find(MAIN_PERSPECTIVE_STACK_ID,
 				application);
 
-		// // Only do this when no other children, or the restored workspace
-		// state
-		// // will be overwritten.
-		// if (perspectiveStack.getChildren().isEmpty()) {
-		//
-		// // clone each snippet that is a perspective and add the cloned
-		// // perspective into the main PerspectiveStack
-		// boolean isFirst = true;
-		// for (MUIElement snippet : application.getSnippets()) {
-		// if (snippet instanceof MPerspective) {
-		// MPerspective perspectiveClone = (MPerspective)
-		// modelService.cloneSnippet(application,
-		// snippet.getElementId(), null);
-		// perspectiveStack.getChildren().add(perspectiveClone);
-		// if (isFirst) {
-		// perspectiveStack.setSelectedElement(perspectiveClone);
-		// isFirst = false;
-		// }
-		// }
-		// }
-		//
-		// }
+	
 		MPerspective demoP = null;
 		MPerspective chartP = null;
 		for (MPerspective perspective : perspectiveStack.getChildren()) {
@@ -296,6 +274,23 @@ public class AbsorbanceChart {
 		// add the trace to xyGraph
 		xyGraph.addTrace(trace);
 		xyGraph.performAutoScale();
+		
+		
+		final String MAIN_PERSPECTIVE_STACK_ID = "MainPerspectiveStack";
+
+		MPerspectiveStack perspectiveStack = (MPerspectiveStack) modelService.find(MAIN_PERSPECTIVE_STACK_ID,
+				application);
+
+	
+		
+		
+		for (MPerspective perspective : perspectiveStack.getChildren()) {
+			if (perspective.getElementId().startsWith("test.rcp.perspective.demo")) {
+				partService.switchPerspective(perspective);
+				break;
+			} 
+
+		}
 	}
 
 	protected void handleGetData() {
