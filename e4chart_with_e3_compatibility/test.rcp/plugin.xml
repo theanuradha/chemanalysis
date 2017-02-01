@@ -18,19 +18,5 @@
     <property name="applicationXMI" value="test.rcp/Application.e4xmi"> </property>
   </product>
 </extension>
-<extension
-      point="org.eclipse.ui.editors">
-   <editor
-         class="prototype.editor.DumyCSVOpenEditor"
-         default="true"
-         filenames="*.csv"
-         id="test.rcp.editor.csv"
-         name="CSV Chart">
-   </editor>
-</extension>
-<extension
-      id="id2"
-      point="org.eclipse.e4.workbench.model">
-</extension>   
 
 </plugin>

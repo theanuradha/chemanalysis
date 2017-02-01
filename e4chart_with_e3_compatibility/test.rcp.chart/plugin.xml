@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            id="test.rcp.chart"
+            name="ChemAnalysis">
+      </category>
+      <view
+            category="test.rcp.chart"
+            class="test.rcp.chart.views.AbsorbanceChartView"
+            icon="icons/sample.gif"
+            id="test.rcp.chart.views.AbsorbanceChartView"
+            name="Absorbance Chat">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="test.rcp.chart.editor.DumyCSVOpenEditor"
+            default="true"
+            filenames=".csv"
+            id="test.rcp.chart.editor"
+            launcher="test.rcp.chart.editor.CSVLauncher"
+            name="Chat CSV">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="test.rcp.chart.perspective.ChemAnalysisPerspective"
+            icon="icons/releng_gears.gif"
+            id="test.rcp.chart.perspective.ChemAnalysisPerspective"
+            name="ChemAnalysis Workbench">
+      </perspective>
+   </extension>
+
+
+</plugin>

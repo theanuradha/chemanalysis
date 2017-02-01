@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/test.plugin.feature_1.0.0.201702011425.jar" id="test.plugin.feature" version="1.0.0.201702011425">
+      <category name="test.plugin.tools"/>
+   </feature>
+   <category-def name="test.plugin.tools" label="ChemAnalysis Tools"/>
+</site>

@@ -1,4 +1,4 @@
-package prototype.serial;
+package test.rcp.chart.serial;
 
 
 import java.util.Map;
