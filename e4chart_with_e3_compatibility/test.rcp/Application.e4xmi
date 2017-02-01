@@ -54,7 +54,7 @@
       </menus>
       <toolbar xmi:id="_4UXAUdSmEeG-a6zBTyJ-wg" elementId="org.eclipse.ui.navigator.ProjectExplorer"/>
     </sharedElements>
-    <sharedElements xsi:type="basic:Part" xmi:id="_L2hs4OLwEea1y-MeW1Pywg" elementId="test.rcp.part.chart" contributionURI="bundleclass://test.rcp/prototype.parts.AbsorbanceChart" label="Chart"/>
+    <sharedElements xsi:type="basic:Part" xmi:id="_L2hs4OLwEea1y-MeW1Pywg" elementId="test.rcp.part.chart" contributionURI="bundleclass://test.rcp.chart/test.rcp.chart.parts.AbsorbanceChart" label="Chart"/>
     <trimBars xmi:id="_VOV6ANTAEeGTY-uOtVc6Mg" elementId="org.eclipse.ui.main.toolbar"/>
     <trimBars xmi:id="_VP1HwNTAEeGTY-uOtVc6Mg" elementId="org.eclipse.ui.trim.status" side="Bottom">
       <children xsi:type="menu:ToolControl" xmi:id="_VP1u0NTAEeGTY-uOtVc6Mg" elementId="org.eclipse.ui.StatusLine" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.StandardTrim">
@@ -98,7 +98,7 @@
     <tags>View</tags>
     <tags>categoryTag:General</tags>
   </descriptors>
-  <descriptors xmi:id="_3X3QUOLvEea1y-MeW1Pywg" elementId="test.rcp.partdescriptor.chart" label="Chart" contributionURI="bundleclass://test.rcp/prototype.parts.AbsorbanceChart"/>
+  <descriptors xmi:id="_3X3QUOLvEea1y-MeW1Pywg" elementId="test.rcp.partdescriptor.chart" label="Chart" contributionURI="bundleclass://test.rcp.chart/test.rcp.chart.parts.AbsorbanceChart"/>
   <commands xmi:id="_WjLSQOLvEea1y-MeW1Pywg" elementId="org.eclipse.ui.file.exit" commandName="quitCommand"/>
   <commands xmi:id="_XCrRsOLvEea1y-MeW1Pywg" elementId="org.eclipse.ui.help.aboutAction" commandName="aboutCommand"/>
   <addons xmi:id="_VnmadNSzEeGBn6dQ9VPexA" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>

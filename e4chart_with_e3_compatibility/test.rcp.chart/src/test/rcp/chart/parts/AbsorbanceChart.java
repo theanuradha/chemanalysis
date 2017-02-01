@@ -1,4 +1,4 @@
-package prototype.parts;
+package test.rcp.chart.parts;
 
 import java.io.FileWriter;
 import java.util.HashMap;
@@ -12,7 +12,6 @@ import javax.inject.Inject;
 import org.eclipse.draw2d.LightweightSystem;
 import org.eclipse.e4.ui.di.Focus;
 import org.eclipse.e4.ui.model.application.MApplication;
-import org.eclipse.e4.ui.model.application.ui.MUIElement;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspective;
 import org.eclipse.e4.ui.model.application.ui.advanced.MPerspectiveStack;
 import org.eclipse.e4.ui.workbench.modeling.EModelService;
@@ -42,10 +41,12 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 
 import com.opencsv.CSVWriter;
 
-import prototype.serial.Serial;
+import test.rcp.chart.serial.Serial;
 
 public class AbsorbanceChart {
 
@@ -67,16 +68,36 @@ public class AbsorbanceChart {
 	@Inject
 	EModelService modelService;
 
+	private Button btnDemoMode;
+
+	private ComboViewer ports;
+
+	private Button btnExportCsv;
+
+	private Button getDataBtn;
+
 	public AbsorbanceChart() {
 	}
 
 	@PostConstruct
 	public void createComposite(Composite parent) {
+
+		IWorkbenchWindow activeWorkbenchWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+
+		if (modelService == null) {
+			modelService = activeWorkbenchWindow.getService(EModelService.class);
+		}
+		if (partService == null) {
+			partService = activeWorkbenchWindow.getService(EPartService.class);
+		}
+		if (application == null) {
+			application = activeWorkbenchWindow.getService(MApplication.class);
+		}
 		parent.setLayout(new GridLayout(5, false));
 
 		new Label(parent, SWT.NONE).setText("Port");
 
-		final  ComboViewer ports = new ComboViewer(parent);
+		ports = new ComboViewer(parent);
 		ports.setContentProvider(ArrayContentProvider.getInstance());
 		String[] serialPorts = Serial.list();
 		ports.setInput(serialPorts);
@@ -119,7 +140,7 @@ public class AbsorbanceChart {
 			}
 		});
 
-		final Button getDataBtn = new Button(parent, SWT.PUSH);
+		getDataBtn = new Button(parent, SWT.PUSH);
 		getDataBtn.setText("Get Data");
 		getDataBtn.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -128,90 +149,64 @@ public class AbsorbanceChart {
 			}
 		});
 
-		final Button btnExportCsv = new Button(parent, SWT.NONE);
-		
-		
+		btnExportCsv = new Button(parent, SWT.NONE);
+
 		final String MAIN_PERSPECTIVE_STACK_ID = "MainPerspectiveStack";
 
 		MPerspectiveStack perspectiveStack = (MPerspectiveStack) modelService.find(MAIN_PERSPECTIVE_STACK_ID,
 				application);
 
-		// // Only do this when no other children, or the restored workspace
-		// state
-		// // will be overwritten.
-		// if (perspectiveStack.getChildren().isEmpty()) {
-		//
-		// // clone each snippet that is a perspective and add the cloned
-		// // perspective into the main PerspectiveStack
-		// boolean isFirst = true;
-		// for (MUIElement snippet : application.getSnippets()) {
-		// if (snippet instanceof MPerspective) {
-		// MPerspective perspectiveClone = (MPerspective)
-		// modelService.cloneSnippet(application,
-		// snippet.getElementId(), null);
-		// perspectiveStack.getChildren().add(perspectiveClone);
-		// if (isFirst) {
-		// perspectiveStack.setSelectedElement(perspectiveClone);
-		// isFirst = false;
-		// }
-		// }
-		// }
-		//
-		// }
 		MPerspective demoP = null;
 		MPerspective chartP = null;
-		for (MPerspective perspective : perspectiveStack.getChildren()) {
-			if (perspective.getElementId().startsWith("test.rcp.perspective.demo")) {
-				demoP = perspective;
-				continue;
-			} else if (perspective.getElementId().startsWith("test.rcp.perspective")) {
-				chartP = perspective;
-				continue;
-			}
+		if (perspectiveStack != null) {
+			for (MPerspective perspective : perspectiveStack.getChildren()) {
+				if (perspective.getElementId().startsWith("test.rcp.perspective.demo")) {
+					demoP = perspective;
+					continue;
+				} else if (perspective.getElementId().startsWith("test.rcp.perspective")) {
+					chartP = perspective;
+					continue;
+				}
 
+			}
 		}
 
 		final MPerspective demo = demoP;
 		final MPerspective chart = chartP;
-		final Button btnDemoMode = new Button(parent, SWT.TOGGLE);
+		btnDemoMode = new Button(parent, SWT.TOGGLE);
 		btnDemoMode.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				ports.getCombo().setEnabled(!btnDemoMode.getSelection());
-				getDataBtn.setEnabled(!btnDemoMode.getSelection());
-				btnExportCsv.setEnabled(!btnDemoMode.getSelection());
+				demoModeUI();
 
 				if (btnDemoMode.getSelection()) {
 
 					if (demo != null)
 						partService.switchPerspective(demo);
-					
+
 					partService.showPart("org.eclipse.ui.navigator.ProjectExplorer", PartState.VISIBLE);
-					
-					
+
 					onSerialMode.set(false);
 					if (serialTrace != null) {
 						xyGraph.removeTrace(serialTrace);
 						serialTrace = null;
 					}
-					
 
 				} else {
 					if (chart != null)
 						partService.switchPerspective(chart);
-					
+
 					for (Trace t : demoTrace.values()) {
 						xyGraph.removeTrace(t);
 					}
 					demoTrace.clear();
-					
 
 				}
 			}
+
 		});
 		btnDemoMode.setText("Demo Mode [CSV]");
 
-		
 		btnExportCsv.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -234,7 +229,8 @@ public class AbsorbanceChart {
 		xyGraph.primaryYAxis.setTitle("Absorbance");
 		xyGraph.primaryYAxis.setShowMajorGrid(true);
 		xyGraph.setShowLegend(false);
-		partService.switchPerspective(chart);
+		if (chart != null)
+			partService.switchPerspective(chart);
 
 	}
 
@@ -272,7 +268,16 @@ public class AbsorbanceChart {
 		}
 	}
 
+	private void demoModeUI() {
+
+		ports.getCombo().setEnabled(!btnDemoMode.getSelection());
+		getDataBtn.setEnabled(!btnDemoMode.getSelection());
+		btnExportCsv.setEnabled(!btnDemoMode.getSelection());
+	}
+
 	public void loadFromCSV(String name, double[] x, double[] y) {
+		btnDemoMode.setSelection(true);
+		demoModeUI();
 		onSerialMode.set(false);
 		if (serialTrace != null) {
 			xyGraph.removeTrace(serialTrace);
@@ -296,6 +301,20 @@ public class AbsorbanceChart {
 		// add the trace to xyGraph
 		xyGraph.addTrace(trace);
 		xyGraph.performAutoScale();
+
+		final String MAIN_PERSPECTIVE_STACK_ID = "MainPerspectiveStack";
+
+		MPerspectiveStack perspectiveStack = (MPerspectiveStack) modelService.find(MAIN_PERSPECTIVE_STACK_ID,
+				application);
+
+		if (perspectiveStack != null)
+			for (MPerspective perspective : perspectiveStack.getChildren()) {
+				if (perspective.getElementId().startsWith("test.rcp.perspective.demo")) {
+					partService.switchPerspective(perspective);
+					break;
+				}
+
+			}
 	}
 
 	protected void handleGetData() {
