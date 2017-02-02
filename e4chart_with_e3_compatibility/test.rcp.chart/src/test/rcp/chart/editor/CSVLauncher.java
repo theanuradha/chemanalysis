@@ -11,6 +11,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.e4.ui.model.application.ui.basic.MPart;
 import org.eclipse.e4.ui.workbench.modeling.EPartService;
+import org.eclipse.e4.ui.workbench.modeling.EPartService.PartState;
 import org.eclipse.ui.IEditorLauncher;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.internal.e4.compatibility.CompatibilityView;
@@ -65,6 +66,7 @@ public class CSVLauncher implements IEditorLauncher {
 				MPart compatibilityPart = partService.findPart(AbsorbanceChartView.ID);
 				if(compatibilityPart!=null)
 				{
+					partService.showPart(AbsorbanceChartView.ID, PartState.ACTIVATE);
 					CompatibilityView view = (CompatibilityView) compatibilityPart.getObject();
 					AbsorbanceChartView chartView = (AbsorbanceChartView) view.getView();
 					chartView.loadFromCSV(file.getName(), x, y);
