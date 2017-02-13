@@ -133,7 +133,6 @@ public class AbsorbanceChart {
 
 					String portName = (String) selection.getFirstElement();
 					serialPort = new Serial(portName, 57600);
-					ports.setSelection(new StructuredSelection(portName));
 					onSerialMode.set(true);
 				}
 
