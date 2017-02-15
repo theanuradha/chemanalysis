@@ -8,6 +8,8 @@
     <http://www.eclipse.org/downloads/>
     
 2.  Use `Help > Install New Software ... > paste url [https://github.com/theanuradha/chemanalysis-updatesite/raw/master] and hit Enter key
+
+    ##note: For Dawn IDE Use following update site [https://github.com/theanuradha/chemanalysis-updatesite/raw/dawn]
     
 3.  Select "ChemAnalysis Tools" install the 
     plugin.
